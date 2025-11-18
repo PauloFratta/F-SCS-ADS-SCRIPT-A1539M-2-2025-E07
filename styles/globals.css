@@ -9,7 +9,8 @@
 body {
     font-family: Inter, "Segoe UI", Arial, sans-serif;
     color: #222;
-    background: #f8f9fa;
+    /*background: #f8f9fa;*/
+    background-color: #8bcbff;
 }
 
 /* Container centralizado */
@@ -100,7 +101,7 @@ body {
 /* Conteúdo principal */
 main {
     /*background-color: transparent;*/
-    background-color: #8bcbff;
+    /*background-color: #8bcbff;*/
 }
 
 .main-content {
