@@ -46,9 +46,6 @@
     transform: translateY(-5px);
     font-weight: bold;
 }
-.logo{
-   color: #0084ff; 
-}
 
 .logo span{
     color:#fff
@@ -279,4 +276,125 @@ main{
 .exclusive-container img{
     max-width: 500px;
 
+}
+
+/* ------------------------------------------------------------------ */
+/* Regras mescladas de styles/main.css                                    */
+/* Mantive o reset e as regras originais acima e acrescentei abaixo os   */
+/* estilos específicos da página inicial (site-header, hero, buttons).  */
+/* ------------------------------------------------------------------ */
+
+:root{
+    --accent:#ff5a5f;
+    --bg:#f8f9fa;
+    --text:#222;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    color: var(--text);
+    background: var(--bg);
+}
+
+.container{
+    max-width:1100px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:0 16px;
+}
+
+.site-header{
+    background:#fff;
+    border-bottom:1px solid #e6e9ee;
+}
+
+.header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 0;
+}
+
+.logo{
+    color: #0084ff; 
+    font-size:22px;
+    margin:0;
+    text-decoration :none;
+}
+
+.main-nav ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    gap:18px;
+}
+
+.main-nav a{
+    color:var(--text);
+    text-decoration:none;
+    font-weight:600;
+}
+
+.main-content{
+    padding:48px 0;
+}
+
+.hero{
+    text-align:center;
+    padding:40px 20px;
+    background:linear-gradient(180deg,rgba(255,255,255,0.6),transparent);
+}
+
+.hero h2{
+    margin:0 0 8px;
+    font-size:28px;
+}
+
+.hero p{
+    margin:0 0 20px;
+    color:#555;
+}
+
+.buttons-row{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.nav-btn{
+    background:var(--accent);
+    color:#fff;
+    border:0;
+    padding:12px 22px;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    transition:transform .15s ease,box-shadow .15s ease;
+}
+
+.nav-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.site-footer{
+    background:#fff;
+    border-top:1px solid #e6e9ee;
+    padding:16px 0;
+    text-align:center;
+    color:#666;
+}
+
+/* Media Queries */
+@media (max-width:600px){
+    .header-inner{padding:12px 0}
+    .hero h2{font-size:20px}
+    .nav-btn{width:100%;max-width:320px}
 }
