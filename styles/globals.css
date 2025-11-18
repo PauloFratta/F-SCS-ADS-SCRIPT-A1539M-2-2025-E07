@@ -26,6 +26,51 @@ body {
     border-bottom: 1px solid #e6e9ee;
 }
 
+.login-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+    gap: 12px;
+    padding: 20px;
+    background-color: rgb(31, 168, 168);
+    border-radius: 30px;
+    text-shadow: 1px 1px 2px #000000;
+    color: #8bcbff;
+}
+
+.login-form .titulo {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 28px;
+}
+
+.login-form label {
+    font-weight: 600;
+}
+
+.login-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    font-size: 16px;
+}
+
+.login-form button {
+    background-color: #0084ff;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+    background-color: #005bb5;
+}
+
 .header-inner {
     display: flex;
     align-items: center;
