@@ -1,169 +1,39 @@
 <!DOCTYPE html>
-<html lang="pr-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Street Store | e-comerce</title>
+    <title>Menu Principal</title>
     <link rel="stylesheet" href="styles/globals.css" />
 </head>
 <body>
-    <div class="navbar show-menu">    
-        <div class="header-inner-content">
-            <h1 class="logo" >STREET<span>STORE</span></h1>
-            <nav>
-                 <ul>
-                    <li>Home</li>
-                    <li>Produtos</li>
-                    <li>Contato</li>
+    <header class="site-header">
+        <div class="container header-inner">
+            <h1 class="logo">Contador Digital</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="cadastro.html">Sign-up</a></li>
                 </ul>
             </nav>
-            <div class="nav-icon-container">
-              <img src="images/cart.png"/>
-              <img src="images/menu.png" class="menu-buttom"/>  
-            </div>
-        </div>
-    </div>
-
-    <header>
-        <div class="header-inner-content">
-            <div class="header-bottom-side">
-                <div class="header-bottom-side-left">
-                    <h2>Novo estilo ao seu dia-a-dia</h2>
-                    <p> Sucesso profissional é um conceito subjetivo que varia de pessoa para pessoa, mas geralmente é definido como a realização de metas e objetivos na carreira, com satisfação e reconhecimento!
-                    </p>
-                    <button>Saiba mais &#8594;</button>
-                </div>
-                <div class="header-bottom-side-right">
-                    <img src="images/gaming-msi-header.png" alt=""/>
-                </div>
-            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-     <main>
-        <div class="gray-background">
-            <div class="page-inner-content">
-                <div class="cols cols-3">  <!-- Adicione o traço -->
-                    <img src="images/products/product-1.png" alt="" />
-                    <img src="images/products/product-2.png" alt="" />
-                    <img src="images/products/product-3.png" alt="" />
-                </div>
-            </div>    
-        </div>
-
-        <div>
-            <div class="page-inner-content">
-                <h3 class="section-title">Produtos Selecionados</h3>
-                <div class="subtitle-underline"></div>
-                <div class="cols cols-4">
-                    <div class="product">
-                        <img src="images/products/product-4.png" alt="" />
-                        <p class="product-name">Combo Gamer</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-5.png" alt="" />
-                        <p class="product-name">Placa de Vídeo</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-6.png" alt="" />
-                        <p class="product-name">Controle Gamer</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-7.png" alt="" />
-                        <p class="product-name">Cadeira Gamer</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                </div>
+    <main class="main-content">
+        <section class="hero">
+            <h2>Bem-vindo ao Contador Digital</h2>
+            <img src = images/contabilidade-digital.jpg alt="Imagem de Contabilidade Digital" />
+            <h2>Facilitando sua gestão financeira!</h2>
+            <p>Escolha uma das seções abaixo para navegar pelo site.</p>
+            <div class="buttons-row">
+                <button id="btn-gastoMensal" class="nav-btn">Gasto Mensal</button>
+                <button id="btn-rendaMensal" class="nav-btn">Renda Mensal</button>
+                <button id="btn-relatorio" class="nav-btn">Lucro ou Prejuizo</button>
             </div>
-             <div>
-            <div class="page-inner-content">
-                <h3 class="section-title">Produtos em Destaque</h3>
-                <div class="subtitle-underline"></div>
-                <div class="cols cols-4">
-                    <div class="product">
-                        <img src="images/products/product-8.png" alt="" />
-                        <p class="product-name">Celular 01</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-8.png" alt="" />
-                        <p class="product-name">Celular 02</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-9.png" alt="" />
-                        <p class="product-name">Celular 04/p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-10.png" alt="" />
-                        <p class="product-name">Suporte Carregador de Celular</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-11.png" alt="" />
-                        <p class="product-name">Celular 05</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-12.png" alt="" />
-                        <p class="product-name">Game</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-13.png" alt="" />
-                        <p class="product-name">Simulador Gamer</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                    <div class="product">
-                        <img src="images/products/product-14.png" alt="" />
-                        <p class="product-name">Console Gamer</p>
-                        <p class="rate">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p class="product-price">4,000.00 <span>M2</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
+    </main>
 
-        <div class="gray-background">
-           <div class="header-inner-content">
-            <div class="header-bottom-side exclusive-container">
-                <div class="header-bottom-side-left">
-                    <h2>Smart Band 4</h2>
-                    <p> O Mi Smart Band 4 tem uma tela AMOLED 39.9% maior que o Mi Band 3, tela completamente digital com brilho ajustável, de tal modo que tudo é claro ao máximo.
-                    </p>
-                    <button>Saiba mais &#8594;</button>
-                </div>
-                <div class="header-bottom-side-right">
-                    <img src="images/exclusive.png" alt=""/>
-                </div>
-            </div>
-        </div> 
-     </main>
-
-    <script>
-    const navbar = document.querySelector(".navbar");
-    const menuButton = document.querySelector(".menu-button");  <!-- Corrigido o nome da variável -->
-
-    menuButton.addEventListener("click", () => {
-        navbar.classList.toggle("show-menu");  <!-- Corrigido classList -->
-    });
-</script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
 
