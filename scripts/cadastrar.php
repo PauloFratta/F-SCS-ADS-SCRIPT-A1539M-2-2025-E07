@@ -30,7 +30,7 @@ try {
     $insert->execute([$nome, $email, $senhaConfirm]);
 
     // redireciona para login (ou mostrar mensagem de erro)
-    header('Location: login.html');
+    header('Location: ../login.html');
     exit;
 } catch (PDOException $e) {
     die('Erro no servidor: ' . $e->getMessage());
