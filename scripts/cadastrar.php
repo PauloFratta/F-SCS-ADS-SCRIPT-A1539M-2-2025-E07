@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/banco/conexao.php';
+require_once __DIR__ . '/../banco/conexao.php';
 
 $nome = trim($_POST['NomeCliente'] ?? '');
 $email = trim($_POST['EmailCliente'] ?? '');
