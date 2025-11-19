@@ -26,4 +26,5 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'cadastro.html';
     });
 
+
 });
