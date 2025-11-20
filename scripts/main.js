@@ -7,15 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCadastro = document.getElementById('btn-cadastro');
 
     if(btnGastoMensal) btnGastoMensal.addEventListener('click', () => {
-        window.location.href = 'gastoMensal.html';
+        window.location.href = 'gastomensal.php';
     });
 
     if(btnRendaMensal) btnRendaMensal.addEventListener('click', () => {
-        window.location.href = 'rendamensal.html';
+        window.location.href = 'rendamensal.php';
     });
 
     if(btnRelatorio) btnRelatorio.addEventListener('click', () => {
-        window.location.href = 'relatorio.html';
+        window.location.href = 'relatorio.php';
     });
 
     if(btnLogin) btnLogin.addEventListener('click', () => {
