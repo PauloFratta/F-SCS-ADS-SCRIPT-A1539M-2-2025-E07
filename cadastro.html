@@ -32,7 +32,12 @@
             <input type="password" id="SenhaCliente" name="SenhaCliente" placeholder="********" required>
            
             <label for="ConfirmarSenha">Confirmar Senha:</label>
-            <input type="password" id="ConfirmarSenha" name="ConfirmarSenha" placeholder="********" required>   
+            <input type="password" id="ConfirmarSenha" name="ConfirmarSenha" placeholder="********" required>
+            
+            <div class="checkbox-row">
+                <input type="checkbox" id="mostrar" onclick="mostrarSenha()">
+                <label for="mostrar">Mostrar senha</label>
+            </div>
     
             <button type="submit" class="btn-submit">Cadastrar</button>
         </form>

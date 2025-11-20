@@ -28,3 +28,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
+
+function mostrarSenha() {
+    var senhaInput = document.getElementById("SenhaCliente");
+    var confirmarSenhaInput = document.getElementById("ConfirmarSenha");
+    var checkbox = document.getElementById("mostrar");
+    if (checkbox.checked) 
+    {
+        senhaInput.type = "text";
+        confirmarSenhaInput.type = "text";
+    } 
+    else 
+    {
+        senhaInput.type = "password";
+        confirmarSenhaInput.type = "password";
+    }
+}
