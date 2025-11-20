@@ -1,20 +1,29 @@
+<?php
+  session_start();
+
+  if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+      header('Location: login.html');
+      exit;
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gasto Mensal</title>
+  <title>Relatório</title>
   <link rel="stylesheet" href="styles/globals.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <h1> <a href="index.html" class="logo">Contador Digital </a></h1>
+      <h1> <a href="index.php" class="logo">Contador Digital </a></h1>
     </div>
   </header>
   <main class="main-content">
-    <h2>Gasto Mensal</h2>
-    <p>Esta é a página de Gasto Mensal.</p>
+    <h2>Relatório</h2>
+    <p>Esta é a página de Relatórios</p>
   </main>
 
   <script src="scripts/main.js"></script>

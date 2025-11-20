@@ -9,7 +9,7 @@
 <body>
     <header class="site-header">
         <div class="container header-inner">
-            <h1> <a href="index.html" class="logo">Contador Digital </a></h1>
+            <h1> <a href="index.php" class="logo">Contador Digital </a></h1>
             <nav class="main-nav">
                 <ul>
                     <li><a href="login.html">Login</a></li>
@@ -17,7 +17,7 @@
         </div>
     </header>
     <main class="main-content">
-        <form action="cadastrar.php" method="POST" class="cadastro-form">
+        <form action="scripts/cadastrar.php" method="POST" class="cadastro-form">
             <h2 class="titulo">Cadastrar-se</h2>
             <label for="NomeCliente">Nome:</label>
             <input type="text" id="NomeCliente" name="NomeCliente" placeholder="Nome e sobrenome" required>
@@ -32,7 +32,12 @@
             <input type="password" id="SenhaCliente" name="SenhaCliente" placeholder="********" required>
            
             <label for="ConfirmarSenha">Confirmar Senha:</label>
-            <input type="password" id="ConfirmarSenha" name="ConfirmarSenha" placeholder="********" required>   
+            <input type="password" id="ConfirmarSenha" name="ConfirmarSenha" placeholder="********" required>
+            
+            <div class="checkbox-row">
+                <input type="checkbox" id="mostrar" onclick="mostrarSenha()">
+                <label for="mostrar">Mostrar senha</label>
+            </div>
     
             <button type="submit" class="btn-submit">Cadastrar</button>
         </form>

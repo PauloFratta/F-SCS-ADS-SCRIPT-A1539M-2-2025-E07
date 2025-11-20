@@ -7,15 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCadastro = document.getElementById('btn-cadastro');
 
     if(btnGastoMensal) btnGastoMensal.addEventListener('click', () => {
-        window.location.href = 'gastoMensal.html';
+        window.location.href = 'gastomensal.php';
     });
 
     if(btnRendaMensal) btnRendaMensal.addEventListener('click', () => {
-        window.location.href = 'rendamensal.html';
+        window.location.href = 'rendamensal.php';
     });
 
     if(btnRelatorio) btnRelatorio.addEventListener('click', () => {
-        window.location.href = 'relatorio.html';
+        window.location.href = 'relatorio.php';
     });
 
     if(btnLogin) btnLogin.addEventListener('click', () => {
@@ -28,3 +28,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
+
+function mostrarSenha() {
+    var senhaInput = document.getElementById("SenhaCliente");
+    var confirmarSenhaInput = document.getElementById("ConfirmarSenha");
+    var checkbox = document.getElementById("mostrar");
+    if (checkbox.checked) 
+    {
+        senhaInput.type = "text";
+        confirmarSenhaInput.type = "text";
+    } 
+    else 
+    {
+        senhaInput.type = "password";
+        confirmarSenhaInput.type = "password";
+    }
+}
