@@ -215,3 +215,114 @@ main {
 .cadastro-form button:hover {
     background-color: #005bb5;
 }
+
+/* Seção de adição e tabela */
+.add-section {
+    max-width: 800px;
+    margin: 24px auto;
+    padding: 12px;
+}
+
+.add-section h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+}
+
+.add-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr min-content;
+    gap: 8px;
+    align-items: end;
+    margin-bottom: 12px;
+}
+
+.add-form input {
+    padding: 8px 10px;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+    height: 38px; 
+    box-sizing: border-box;
+}
+
+/* Campo com label em cima do input */
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+.field label {
+    margin-bottom: 6px;
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.add-form button {
+    height: 38px;
+    padding: 0 18px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    align-self: end; 
+}
+
+.add-form button:hover {
+    background: #218838;
+}
+
+table#dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.08);
+}
+
+table#dataTable th,
+table#dataTable td {
+    border: 1px solid #07070700;
+    padding: 8px 10px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+table#dataTable thead th {
+background-color: rgb(31, 168, 168);
+}
+
+table#dataTable tbody tr:nth-child(even) {
+    background: #1f86ca;
+}
+
+/* Estilo do botão remover na tabela */
+.remove-btn {
+    padding: 6px 8px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background: #c82333;
+}
+
+/* Botão Salvar com mesmo estilo do botão Adicionar */
+.salvar {
+    margin-top: 12px;
+}
+
+.salvar button {
+    height: 38px;
+    padding: 0 18px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.salvar button:hover {
+    background: #218838;
+}
