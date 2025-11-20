@@ -21,7 +21,9 @@
             $_SESSION['CodCliente'] = $usuario['CodCliente'];
             $_SESSION['NomeCliente'] = $usuario['NomeCliente'];
 
-            header('Location: ../index.html');
+            $_SESSION['loggedin'] = true;
+
+            header('Location: ../index.php');
             exit;
         } 
         else 
