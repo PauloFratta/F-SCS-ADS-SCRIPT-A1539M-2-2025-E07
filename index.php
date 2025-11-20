@@ -16,8 +16,7 @@
 
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                         echo '<ul>
-                                <li><a href="perfil.php">Perfil</a></li>
-                                <li><a href="scripts/logout.php">Logout</a></li>
+                                <li><a href="scripts/deslogar.php">Logout</a></li>
                               </ul>';
                     } else {
                         echo '<ul>
