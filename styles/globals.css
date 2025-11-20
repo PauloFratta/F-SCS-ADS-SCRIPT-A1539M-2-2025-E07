@@ -307,6 +307,20 @@ table#dataTable tbody tr:nth-child(even) {
 .remove-btn:hover {
     background: #c82333;
 }
+/* Alinha células da tabela verticalmente e dá padding consistente */
+#dataTable th,
+#dataTable td {
+  vertical-align: middle;
+  padding: 12px 10px;
+}
+
+/* Força largura e centraliza o conteúdo da coluna de ações */
+#dataTable th:last-child,
+#dataTable td:last-child {
+  width: 140px;         
+  text-align: center;   
+}
+
 
 /* Botão Salvar com mesmo estilo do botão Adicionar */
 .salvar {
@@ -326,3 +340,4 @@ table#dataTable tbody tr:nth-child(even) {
 .salvar button:hover {
     background: #218838;
 }
+
