@@ -68,6 +68,16 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    font-size: 12px;
+    text-shadow: none;
+    font-weight: lighter;
+}
+
 .login-form button:hover {
     background-color: #005bb5;
 }

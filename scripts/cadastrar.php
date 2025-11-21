@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/banco/conexao.php';
+require_once __DIR__ . '/../banco/conexao.php';
 
 $nome = trim($_POST['NomeCliente'] ?? '');
 $email = trim($_POST['EmailCliente'] ?? '');
@@ -30,7 +30,7 @@ try {
     $insert->execute([$nome, $email, $senhaConfirm]);
 
     // redireciona para login (ou mostrar mensagem de erro)
-    header('Location: login.html');
+    header('Location: ../login.html');
     exit;
 } catch (PDOException $e) {
     die('Erro no servidor: ' . $e->getMessage());

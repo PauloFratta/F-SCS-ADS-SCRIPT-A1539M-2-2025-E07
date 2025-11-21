@@ -1,3 +1,12 @@
+<?php
+  session_start();
+
+  if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+      header('Location: login.html');
+      exit;
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,7 +18,7 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <h1> <a href="index.html" class="logo">Contador Digital </a></h1>
+      <h1> <a href="index.php" class="logo">Contador Digital </a></h1>
     </div>
   </header>
   <main class="main-content">
