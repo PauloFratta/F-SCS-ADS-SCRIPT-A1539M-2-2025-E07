@@ -26,62 +26,66 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'cadastro.html';
     });
 
+
     // Função que adiciona uma linha à tabela com os valores dos inputs
     (function () {
-        const addBtn = document.getElementById('addBtn');
-        const col1 = document.getElementById('col1');
-        const col2 = document.getElementById('col2');
-        const tbody = document.querySelector('#dataTable tbody');
+            const addBtn = document.getElementById('addBtn');
+            const col1 = document.getElementById('col1');
+            const col2 = document.getElementById('col2');
+            const tipo = document.getElementById('tipo');
+            const tbody = document.querySelector('#dataTable tbody');
 
-        function clearInputs() {
-             col1.value = '';
-             col2.value = '';
-             col1.focus();
-        }
-
-        function addRow() {
-            const v1 = col1.value.trim();
-            const v2 = col2.value.trim();
-
-            if (!v1 && !v2) {
-                // Não adiciona linhas vazias
-                return;
+            function clearInputs() {
+                col1.value = '';
+                col2.value = '';
+                tipo.value = 'fixa';
+                col1.focus();
             }
 
-            const tr = document.createElement('tr');
-            [v1, v2].forEach(text => {
-                const td = document.createElement('td');
-                td.textContent = text;
-                tr.appendChild(td);
-            });
+            function addRow() {
+                const v1 = col1.value.trim();
+                const v2 = col2.value.trim();
+                const v3 = tipo.value;
 
-            // Coluna de ações com botão Remover
-            const actionTd = document.createElement('td');
-            const removeBtn = document.createElement('button');
-            removeBtn.type = 'button';
-            removeBtn.className = 'remove-btn';
-            removeBtn.textContent = 'Remover';
-            removeBtn.addEventListener('click', function () {
-                tr.remove();
-            });
-            actionTd.appendChild(removeBtn);
-            tr.appendChild(actionTd);
-
-            tbody.appendChild(tr);
-            clearInputs();
-        }
-
-        addBtn.addEventListener('click', addRow);
-
-        // Permite adicionar com Enter em qualquer input (melhora usabilidade)
-        [col1, col2].forEach(input => {
-            input.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    addRow();
+                if (!v1 && !v2 && !v3) {
+                    // Não adiciona linhas vazias
+                    return;
                 }
+
+                const tr = document.createElement('tr');
+                [v1, v2, v3].forEach(text => {
+                    const td = document.createElement('td');
+                    td.textContent = text;
+                    tr.appendChild(td);
+                });
+
+                // Coluna de ações com botão Remover
+                const actionTd = document.createElement('td');
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'remove-btn';
+                removeBtn.textContent = 'Remover';
+                removeBtn.addEventListener('click', function () {
+                    tr.remove();
+                });
+                actionTd.appendChild(removeBtn);
+                tr.appendChild(actionTd);
+
+                tbody.appendChild(tr);
+                clearInputs();
+            }
+
+            addBtn.addEventListener('click', addRow);
+
+            // Permite adicionar com Enter em qualquer input (melhora usabilidade)
+            [col1, col2].forEach(input => {
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addRow();
+                    }
+                });
             });
-        });
     })();
 
 });

@@ -341,3 +341,11 @@ table#dataTable tbody tr:nth-child(even) {
     background: #218838;
 }
 
+.add-form input,
+.add-form select {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px;
+    box-sizing: border-box;
+}
