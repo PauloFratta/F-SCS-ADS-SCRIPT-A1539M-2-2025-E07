@@ -22,8 +22,44 @@
     </div>
   </header>
   <main class="main-content">
-    <h2>Renda Mensal</h2>
-    <p>Esta é a página de Renda Mensal.</p>
+    <section class="add-section">
+        <h2>Rendas Mensais</h2>
+        <div class="add-form">
+            <div class="field">
+                <label for="col1">Nome da Renda</label>
+                <input type="text" id="col1" placeholder="Nome da Renda">
+            </div>
+            <div class="field">
+                <label for="col2">Valor</label>
+                <input type="text" id="col2" placeholder="Valor">
+            </div>
+            <div class="field">
+                <label for="tipo">Tipo</label>
+                <select id="tipo">
+                    <option value="fixa">Fixa</option>
+                    <option value="variavel">Variável</option>
+                </select>
+            </div>
+            <button type="button" id="addBtn">Adicionar</button>
+        </div>
+
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Tipo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- os itens irao aparecer aqui -->
+            </tbody>
+        </table>
+        <div class="salvar">
+            <button type="button" id="saveBtn">Salvar</button>
+        </div>
+    </section>
   </main>
 
   <script src="scripts/main.js"></script>
