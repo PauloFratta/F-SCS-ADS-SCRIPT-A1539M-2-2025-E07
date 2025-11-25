@@ -1,4 +1,13 @@
 
+<?php
+  session_start();
+
+  if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+      header('Location: login.html');
+      exit;
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,14 +17,7 @@
   <link rel="stylesheet" href="styles/globals.css" />
 </head>
 <body>
-  <?php
-  session_start();
-
-  if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-      header('Location: login.html');
-      exit;
-  }
-?>
+  
   <header class="site-header">
     <div class="container header-inner">
       <h1> <a href="index.php" class="logo">Contador Digital </a></h1>
