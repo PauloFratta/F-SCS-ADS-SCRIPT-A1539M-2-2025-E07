@@ -359,3 +359,99 @@ table#dataTable tbody tr:nth-child(even) {
     height: 38px;
     box-sizing: border-box;
 }
+
+/* Grid página de relatório */
+.container-analise {
+    background-color: #eee;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px 8px 0px 0px;
+}
+
+h2#titulo-analise {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+@media (max-width: 800px) {
+    .container-analise {
+        grid-template-columns: 1fr;
+    }
+}
+
+.lista-renda {
+    background-color: lightgreen;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    justify-items: center;
+    align-items: center;
+}
+
+.lista-despesa {
+    background-color: lightcoral;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    justify-items: center;
+    align-items: center;
+}
+
+.resumo-renda {
+    background-color: lightgreen;
+    margin-bottom: 20px;
+    justify-items: center;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.resumo-despesa {
+    background-color: lightcoral;
+    margin-bottom: 20px;
+    justify-items: center;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.balanco-final {
+     background-color: lightblue;
+    margin: 0 auto 20px;      
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-end;
+    padding: 12px;
+    border-radius: 0px 0px 8px 8px;
+    box-sizing: border-box;
+}
+
+.container-analise table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #444444;
+    text-align: center;
+}
+
+.container-analise th, .container-analise td {
+    border: 1px solid #444444;
+    padding: 8px;
+    text-align: center;
+}
+
+.container-analise input {
+    padding: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 4px;
+}
