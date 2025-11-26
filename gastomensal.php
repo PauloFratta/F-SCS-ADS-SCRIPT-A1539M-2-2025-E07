@@ -13,7 +13,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gastos Mensais</title>
+  <title>Despesas Mensais</title>
   <link rel="stylesheet" href="styles/globals.css" />
 </head>
 <body>
