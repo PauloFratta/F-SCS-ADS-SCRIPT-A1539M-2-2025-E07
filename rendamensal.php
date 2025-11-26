@@ -59,6 +59,19 @@
         <div class="salvar">
             <button type="button" id="saveBtnRendaMensal">Salvar</button>
         </div>
+        <table id="tabelaRenda">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Valor</th>
+              <th>Editar</th>
+              <th>Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
     </section>
   </main>
 

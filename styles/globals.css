@@ -304,6 +304,30 @@ table#dataTable tbody tr:nth-child(even) {
     background: #1f86ca;
 }
 
+/* css da tabela de renda para poder editar */
+
+table#tabelaRenda {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.08);
+}
+
+table#tabelaRenda th,
+table#tabelaRenda td {
+    border: 1px solid #07070700;
+    padding: 8px 10px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+table#tabelaRenda thead th {
+background-color: rgb(31, 168, 168);
+}
+
+table#tabelaRenda tbody tr:nth-child(even) {
+    background: #1f86ca;
+}
+
 /* Estilo do botão remover na tabela */
 .remove-btn {
     padding: 6px 8px;
