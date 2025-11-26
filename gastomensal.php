@@ -25,10 +25,10 @@
   </header>
   <main class="main-content">
     <section class="add-section">
-        <h2>Rendas Mensais</h2>
+        <h2>Despesas Mensais</h2>
         <div class="add-form">
             <div class="field">
-                <label for="col1">Nome da Renda</label>
+                <label for="col1">Nome da Despesa</label>
                 <input type="text" id="col1" placeholder="Nome da Renda">
             </div>
             <div class="field">
