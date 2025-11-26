@@ -136,6 +136,59 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 });
             }
+
+            // Salvar dados no banco de dados
+            const saveBtnRenda = document.getElementById('saveBtnRendaMensal');
+            if (saveBtnRenda) {
+                saveBtnRenda.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const rows = tbody.querySelectorAll('tr');
+                    if (rows.length === 0) {
+                        alert('Adicione pelo menos um gasto para salvar!');
+                        return;
+                    }
+
+                    // Coletar todos os dados da tabela
+                    const dados = [];
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        if (cells.length >= 3) {
+                            dados.push({
+                                nome: cells[0].textContent.trim(),
+                                valor: cells[1].textContent.trim(),
+                                tipo: cells[2].textContent.trim()
+                            });
+                        }
+                    });
+
+                    // Enviar para o servidor
+                    fetch('scripts/BACKrendamensal.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dados)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.sucesso) {
+                            alert('Gastos salvos com sucesso!');
+                            // Limpar tabela após salvar
+                            tbody.innerHTML = '';
+                        } else {
+                            alert('Erro ao salvar: ' + data.mensagem);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        alert('Erro ao conectar com o servidor');
+                    });
+                });
+            }
+
+
+
     })();
 
 });
