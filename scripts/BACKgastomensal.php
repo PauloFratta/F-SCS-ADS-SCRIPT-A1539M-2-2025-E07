@@ -1,5 +1,4 @@
 <?php   
-require_once 'verificalogin.php';
 require_once __DIR__ . '/../banco/conexao.php';
 
 // Receber dados em JSON
@@ -14,10 +13,12 @@ if (!is_array($dados) || empty($dados)) {
 }
 
 try {
+    session_start();
+
     // Pegar o ID do cliente logado da sessão
     $codCliente = $_SESSION['CodCliente'] ?? null;
     
-    if (!$codCliente) {
+    if ($codCliente === null) {
         throw new Exception('Usuário não autenticado');
     }
 
