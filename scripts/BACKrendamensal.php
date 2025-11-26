@@ -18,7 +18,7 @@ try {
     // Pegar o ID do cliente logado da sessão
     $codCliente = $_SESSION['CodCliente'] ?? null;
     
-    if (!$codCliente) {
+    if ($codCliente === null) {
         throw new Exception('Usuário não autenticado');
     }
 
@@ -33,18 +33,18 @@ try {
 
         // Validações básicas
         if (empty($nome)) {
-            $erros[] = 'Nome do gasto não pode estar vazio';
+            $erros[] = 'Nome da renda não pode estar vazio';
             continue;
         }
 
         if (empty($valor) || !is_numeric($valor)) {
-            $erros[] = "Valor inválido para o gasto '{$nome}'";
+            $erros[] = "Valor inválido para a renda '{$nome}'";
             continue;
         }
 
         // Normalizar tipo
         if ($tipo === 'VARIÁVEL' || $tipo === 'VARIAVEL') {
-            $tipo = 'GASTO';
+            $tipo = 'RENDA';
             $tabela = 'VarGastoRenda';
             
             // Inserir em VarGastoRenda (só nome)
@@ -53,12 +53,12 @@ try {
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':nome' => $nome,
-                ':tipo' => 'GASTO',
+                ':tipo' => 'RENDA',
                 ':codCliente' => $codCliente
             ]);
 
         } elseif ($tipo === 'FIXA' || $tipo === 'FIXO') {
-            $tipo = 'GASTO';
+            $tipo = 'RENDA';
             $tabela = 'FixGastoRenda';
             
             // Inserir em FixGastoRenda (nome + valor)
@@ -68,7 +68,7 @@ try {
             $stmt->execute([
                 ':nome' => $nome,
                 ':valor' => (float)$valor,
-                ':tipo' => 'GASTO',
+                ':tipo' => 'RENDA',
                 ':codCliente' => $codCliente
             ]);
         } else {
@@ -79,7 +79,7 @@ try {
     $pdo->commit();
 
     if (empty($erros)) {
-        echo json_encode(['sucesso' => true, 'mensagem' => 'Gastos salvos com sucesso']);
+        echo json_encode(['sucesso' => true, 'mensagem' => 'Renda salvos com sucesso']);
     } else {
         echo json_encode(['sucesso' => false, 'mensagem' => implode('; ', $erros)]);
     }

@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Salvar dados no banco de dados
+            // Salvar dados da renda no banco de dados
             const saveBtnRenda = document.getElementById('saveBtnRendaMensal');
             if (saveBtnRenda) {
                 saveBtnRenda.addEventListener('click', function (e) {
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const rows = tbody.querySelectorAll('tr');
                     if (rows.length === 0) {
-                        alert('Adicione pelo menos um gasto para salvar!');
+                        alert('Adicione pelo menos uma renda para salvar!');
                         return;
                     }
 
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(response => response.json())
                     .then(data => {
                         if (data.sucesso) {
-                            alert('Gastos salvos com sucesso!');
+                            alert('Renda salvos com sucesso!');
                             // Limpar tabela após salvar
                             tbody.innerHTML = '';
                         } else {

@@ -57,7 +57,7 @@
             </tbody>
         </table>
         <div class="salvar">
-            <button type="button" id="saveBtn">Salvar</button>
+            <button type="button" id="saveBtnRendaMensal">Salvar</button>
         </div>
     </section>
   </main>
