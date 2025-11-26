@@ -13,8 +13,10 @@ if (!is_array($dados) || empty($dados)) {
 }
 
 try {
+    session_start();
+
     // Pegar o ID do cliente logado da sessão
-    $codCliente = $_SESSION['CodCliente'] == null;
+    $codCliente = $_SESSION['CodCliente'] ?? null;
     
     if (!$codCliente) {
         throw new Exception('Usuário não autenticado');
