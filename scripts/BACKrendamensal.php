@@ -1,63 +1,93 @@
-<?php
-// Recebe JSON com array de rendas e insere na tabela FixGastoRenda
-// Espera { nome, valor, tipo } por item. Usa CodCliente da sessão.
-
+<?php   
 require_once __DIR__ . '/../banco/conexao.php';
-session_start();
-header('Content-Type: application/json; charset=utf-8');
 
-// Verifica sessão
-if (empty($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || empty($_SESSION['CodCliente'])) {
-    http_response_code(401);
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Usuário não autenticado.']);
-    exit;
-}
-
-$codCliente = (int) $_SESSION['CodCliente'];
-
-// Lê entrada JSON
+// Receber dados em JSON
 $input = file_get_contents('php://input');
-$data = json_decode($input, true);
+$dados = json_decode($input, true);
 
-if (!is_array($data)) {
+// Validar se é um array
+if (!is_array($dados) || empty($dados)) {
     http_response_code(400);
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Formato inválido. Esperado JSON array.']);
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Nenhum dado recebido']);
     exit;
 }
 
-$pdo->beginTransaction();
 try {
-    $stmt = $pdo->prepare('INSERT INTO FixGastoRenda (NomeFixGR, ValorFixGR, FixRenOuGas, CodCliente) VALUES (?, ?, ?, ?)');
-    $count = 0;
+    // Pegar o ID do cliente logado da sessão
+    $codCliente = $_SESSION['CodCliente'] == null;
+    
+    if (!$codCliente) {
+        throw new Exception('Usuário não autenticado');
+    }
 
-    foreach ($data as $item) {
+    $pdo->beginTransaction();
+    $erros = [];
+
+    // Inserir cada gasto
+    foreach ($dados as $item) {
         $nome = trim($item['nome'] ?? '');
-        $valorRaw = trim($item['valor'] ?? '0');
-        // normalizar valor: aceitar vírgula ou ponto
-        $valorNormalized = str_replace(',', '.', $valorRaw);
-        $valor = is_numeric($valorNormalized) ? (float)$valorNormalized : null;
+        $valor = trim($item['valor'] ?? '');
+        $tipo = strtoupper(trim($item['tipo'] ?? ''));
 
-        $tipo = trim(strtoupper($item['tipo'] ?? ''));
-
-        if ($nome === '' || $valor === null) {
-            // pular itens inválidos
+        // Validações básicas
+        if (empty($nome)) {
+            $erros[] = 'Nome do gasto não pode estar vazio';
             continue;
         }
 
-        // Para rendas fixas/variaveis, gravamos na tabela de FixGastoRenda
-        // ValorFixGR: decimal, FixRenOuGas: 'RENDA'
-        $fixRenOuGas = 'RENDA';
+        if (empty($valor) || !is_numeric($valor)) {
+            $erros[] = "Valor inválido para o gasto '{$nome}'";
+            continue;
+        }
 
-        $stmt->execute([$nome, $valor, $fixRenOuGas, $codCliente]);
-        $count++;
+        // Normalizar tipo
+        if ($tipo === 'VARIÁVEL' || $tipo === 'VARIAVEL') {
+            $tipo = 'GASTO';
+            $tabela = 'VarGastoRenda';
+            
+            // Inserir em VarGastoRenda (só nome)
+            $sql = "INSERT INTO VarGastoRenda (NomeVarGR, VarRenOuGas, CodCliente) 
+                    VALUES (:nome, :tipo, :codCliente)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':nome' => $nome,
+                ':tipo' => 'GASTO',
+                ':codCliente' => $codCliente
+            ]);
+
+        } elseif ($tipo === 'FIXA' || $tipo === 'FIXO') {
+            $tipo = 'GASTO';
+            $tabela = 'FixGastoRenda';
+            
+            // Inserir em FixGastoRenda (nome + valor)
+            $sql = "INSERT INTO FixGastoRenda (NomeFixGR, ValorFixGR, FixRenOuGas, CodCliente) 
+                    VALUES (:nome, :valor, :tipo, :codCliente)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':nome' => $nome,
+                ':valor' => (float)$valor,
+                ':tipo' => 'GASTO',
+                ':codCliente' => $codCliente
+            ]);
+        } else {
+            $erros[] = "Tipo inválido para o gasto '{$nome}'. Use 'Fixa' ou 'Variável'";
+        }
     }
 
     $pdo->commit();
-    echo json_encode(['sucesso' => true, 'inseridos' => $count]);
+
+    if (empty($erros)) {
+        echo json_encode(['sucesso' => true, 'mensagem' => 'Gastos salvos com sucesso']);
+    } else {
+        echo json_encode(['sucesso' => false, 'mensagem' => implode('; ', $erros)]);
+    }
+
 } catch (PDOException $e) {
     $pdo->rollBack();
     http_response_code(500);
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Erro no servidor: ' . $e->getMessage()]);
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Erro no banco de dados: ' . $e->getMessage()]);
+} catch (Exception $e) {
+    http_response_code(401);
+    echo json_encode(['sucesso' => false, 'mensagem' => $e->getMessage()]);
 }
-
 ?>
