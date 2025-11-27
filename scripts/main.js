@@ -140,8 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
-function mostrarSenha() {
+// Função para mostrar ou esconder a senha no formulário de cadastro/login
+function mostrarSenha() 
+{
     var senhaInput = document.getElementById("SenhaCliente");
     var confirmarSenhaInput = document.getElementById("ConfirmarSenha");
     var checkbox = document.getElementById("mostrar");
@@ -156,3 +157,86 @@ function mostrarSenha() {
         confirmarSenhaInput.type = "password";
     }
 }
+
+// Função para exibir despesas mensais no relatório
+async function exibirDespesasRelatorio() 
+{
+    const rendasBody = document.getElementById('listaRendas');
+    const despesasBody = document.getElementById('listaDespesas');
+    const erroEl = document.getElementById('erro');
+
+    if (!rendasBody || !despesasBody) return; // página não é relatorio.php
+
+    erroEl && (erroEl.textContent = '');
+
+    try {
+        const resp = await fetch('scripts/BACKrelatorio.php', { credentials: 'same-origin' });
+        if (!resp.ok) throw new Error('Erro na requisição: ' + resp.status);
+        const data = await resp.json();
+
+        if (!data.sucesso) throw new Error(data.mensagem || 'Resposta sem sucesso');
+
+        // Limpa tabelas
+        rendasBody.innerHTML = '';
+        despesasBody.innerHTML = '';
+
+        const formatValor = (v) => {
+            const n = Number(String(v).replace(',', '.')) || 0;
+            return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        };
+
+        // Preenche rendas
+        const rendas = data.rendas || [];
+        if (rendas.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td colspan="3" style="text-align:center;color:#666">Nenhuma renda registrada</td>';
+            rendasBody.appendChild(tr);
+        } else {
+            rendas.forEach(item => {
+                const tr = document.createElement('tr');
+                const nomeTd = document.createElement('td');
+                const valorTd = document.createElement('td');
+                const tipoTd = document.createElement('td');
+                nomeTd.textContent = item.NomeFixGR ?? item.NomeVarGR ?? '';
+                valorTd.textContent = formatValor(item.valor ?? item.ValorFixGR ?? 0);
+                tipoTd.textContent = item.FixRenOuGas ?? item.VarRenOUGas ?? '';
+                tr.appendChild(nomeTd);
+                tr.appendChild(valorTd);
+                tr.appendChild(tipoTd);
+                rendasBody.appendChild(tr);
+            });
+        }
+
+        // Preenche despesas (gastos)
+        const gastos = data.gastos || [];
+        if (gastos.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td colspan="3" style="text-align:center;color:#666">Nenhuma despesa registrada</td>';
+            despesasBody.appendChild(tr);
+        } else {
+            gastos.forEach(item => {
+                const tr = document.createElement('tr');
+                const nomeTd = document.createElement('td');
+                const valorTd = document.createElement('td');
+                const tipoTd = document.createElement('td');
+                nomeTd.textContent = item.nome ?? item.NomeFixGR ?? item.NomeVarGR ?? '';
+                valorTd.textContent = formatValor(item.valor ?? item.ValorFixGR ?? item.ValorVarGR ?? 0);
+                tipoTd.textContent = item.tipo ?? item.TipoFixGR ?? item.TipoVarGR ?? '';
+                tr.appendChild(nomeTd);
+                tr.appendChild(valorTd);
+                tr.appendChild(tipoTd);
+                despesasBody.appendChild(tr);
+            });
+        }
+
+    } catch (err) {
+        console.error(err);
+        if (erroEl) erroEl.textContent = 'Erro ao carregar relatório: ' + (err.message || '');
+    }
+}
+
+// Chama automaticamente quando a página tiver o DOM pronto
+document.addEventListener('DOMContentLoaded', () => {
+    // se estivermos na página de relatório, carrega os dados
+    exibirDespesasRelatorio();
+});

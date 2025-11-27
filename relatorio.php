@@ -29,7 +29,7 @@
         <div class="container-analise">
           <div class="lista-renda">
             <h3>Rendas Mensais</h3>
-            <table id="listaRendas">
+            <table>
               <thead>
                 <tr>
                   <th>Nome</th>
@@ -37,7 +37,7 @@
                   <th>Tipo</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="listaRendas">
                 <!-- Itens de renda serão inseridos aqui -->
               </tbody>
             </table>
@@ -45,7 +45,7 @@
 
           <div class="lista-despesa">
             <h3>Despesas Mensais</h3>
-            <table id="listaDespesas">
+            <table>
               <thead>
                 <tr>
                   <th>Nome</th>
@@ -53,7 +53,7 @@
                   <th>Tipo</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="listaDespesas">
                 <!-- Itens de despesa serão inseridos aqui -->
               </tbody>
             </table>
