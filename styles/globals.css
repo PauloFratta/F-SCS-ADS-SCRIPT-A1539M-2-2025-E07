@@ -459,6 +459,12 @@ h2#titulo-analise {
     box-sizing: border-box;
 }
 
+.valor-var-tabela {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
 .container-analise table {
     width: 100%;
     border-collapse: collapse;
