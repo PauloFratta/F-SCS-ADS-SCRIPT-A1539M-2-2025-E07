@@ -282,25 +282,27 @@ main {
     background: #218838;
 }
 
-table#dataTable {
+.table-finance {
     width: 100%;
     border-collapse: collapse;
     box-shadow: 0 5px 10px rgba(0,0,0,0.08);
 }
 
-table#dataTable th,
-table#dataTable td {
+.table-finance th,
+.table-finance td {
     border: 1px solid #07070700;
     padding: 8px 10px;
     text-align: left;
     border-radius: 10px;
 }
 
-table#dataTable thead th {
+.table-finance thead th {
 background-color: rgb(31, 168, 168);
+ color: #0c2c3a; /* same tone used elsewhere */
+ font-weight: 700;
 }
 
-table#dataTable tbody tr:nth-child(even) {
+.table-finance tbody tr:nth-child(even) {
     background: #1f86ca;
 }
 
@@ -342,15 +344,17 @@ table#tabelaRenda tbody tr:nth-child(even) {
     background: #c82333;
 }
 /* Alinha células da tabela verticalmente e dá padding consistente */
-#dataTable th,
-#dataTable td {
+.table-finance th,
+.table-finance td {
   vertical-align: middle;
   padding: 12px 10px;
 }
 
 /* Força largura e centraliza o conteúdo da coluna de ações */
 #dataTable th:last-child,
-#dataTable td:last-child {
+#dataTable td:last-child,
+#tabelaGastosSalvos th:last-child,
+#tabelaGastosSalvos td:last-child {
   width: 140px;         
   text-align: center;   
 }
@@ -484,4 +488,48 @@ h2#titulo-analise {
     box-sizing: border-box;
     border: 0;
     border-radius: 4px;
+}
+
+/* Tabela de gastos salvos */
+table#tabelaGastosSalvos {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.08);
+}
+
+table#tabelaGastosSalvos th,
+table#tabelaGastosSalvos td {
+    border: 1px solid #07070700;
+    padding: 8px 10px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+table#tabelaGastosSalvos thead th {
+background-color: rgb(31, 168, 168);
+}
+
+table#tabelaGastosSalvos tbody tr:nth-child(even) {
+    background: #1f86ca;
+}
+
+/* Alinha células da tabela verticalmente e dá padding consistente */
+#tabelaGastosSalvos th,
+#tabelaGastosSalvos td {
+  vertical-align: middle;
+  padding: 12px 10px;
+}
+
+/* Força largura e centraliza o conteúdo da coluna de ações */
+#tabelaGastosSalvos th:last-child,
+#tabelaGastosSalvos td:last-child {
+  width: 140px;         
+  text-align: center;   
+}
+
+/* Centraliza coluna ID */
+#tabelaGastosSalvos th:first-child,
+#tabelaGastosSalvos td:first-child {
+  width: 60px;
+  text-align: center;
 }

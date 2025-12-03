@@ -23,7 +23,7 @@
   </header>
   <main class="main-content">
     <section class="add-section">
-        <h2>Rendas Mensais</h2>
+        <h2>Adicionar Novas Rendas</h2>
         <div class="add-form">
             <div class="field">
                 <label for="col1">Nome da Renda</label>
@@ -43,7 +43,7 @@
             <button type="button" id="addBtn">Adicionar</button>
         </div>
 
-        <table id="dataTable">
+        <table id="dataTable" class="table-finance">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -57,9 +57,13 @@
             </tbody>
         </table>
         <div class="salvar">
-            <button type="button" id="saveBtnRendaMensal">Salvar</button>
+            <button type="button" id="saveBtnRendaMensal">Salvar Novas Rendas</button>
         </div>
-        <table id="tabelaRenda">
+    </section>
+
+    <section class="add-section">
+        <h2>Rendas Salvas</h2>
+        <table id="tabelaRenda" class="table-finance">
           <thead>
             <tr>
               <th>ID</th>
@@ -73,6 +77,7 @@
           </tbody>
         </table>
     </section>
+  </main>
   </main>
 
   <script src="scripts/main.js"></script>

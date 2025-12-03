@@ -25,11 +25,11 @@
   </header>
   <main class="main-content">
     <section class="add-section">
-        <h2>Despesas Mensais</h2>
+        <h2>Adicionar Novas Despesas</h2>
         <div class="add-form">
             <div class="field">
                 <label for="col1">Nome da Despesa</label>
-                <input type="text" id="col1" placeholder="Nome da Renda">
+                <input type="text" id="col1" placeholder="Nome da Despesa">
             </div>
             <div class="field">
                 <label for="col2">Valor</label>
@@ -45,7 +45,7 @@
             <button type="button" id="addBtn">Adicionar</button>
         </div>
 
-        <table id="dataTable">
+        <table id="dataTable" class="table-finance">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -59,8 +59,26 @@
             </tbody>
         </table>
         <div class="salvar">
-            <button type="button" id="saveBtn">Salvar</button>
+            <button type="button" id="saveBtn">Salvar Novos Gastos</button>
         </div>
+    </section>
+
+    <section class="add-section">
+        <h2>Despesas Salvas</h2>
+        <table id="tabelaGastosSalvos" class="table-finance">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Gastos salvos do banco aparecem aqui -->
+            </tbody>
+        </table>
     </section>
   </main>
 
