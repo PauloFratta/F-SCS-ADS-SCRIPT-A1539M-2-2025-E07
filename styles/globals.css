@@ -533,3 +533,39 @@ table#tabelaGastosSalvos tbody tr:nth-child(even) {
   width: 60px;
   text-align: center;
 }
+
+/* Botões da tabela de gastos/rendas salvos */
+.edit-btn,
+.delete-btn {
+    padding: 6px 12px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-btn {
+    background: #ffc107;
+    color: #000;
+}
+
+.edit-btn:hover {
+    background: #e0a800;
+}
+
+.delete-btn {
+    background: #dc3545;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+/* Centraliza botões nas colunas Editar e Excluir */
+#tabelaGastosSalvos td:nth-last-child(2),
+#tabelaGastosSalvos td:last-child,
+#tabelaRenda td:nth-last-child(2),
+#tabelaRenda td:last-child {
+    text-align: center;
+}

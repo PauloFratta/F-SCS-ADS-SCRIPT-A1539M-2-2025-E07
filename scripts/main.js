@@ -281,7 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Valor
             const tdValor = document.createElement('td');
-            tdValor.textContent = gasto.valor || '0.00';
+            if (gasto.tipo === 'variavel') {
+                tdValor.textContent = 'Variável';
+                tdValor.style.fontStyle = 'italic';
+                tdValor.style.color = '#666';
+            } else {
+                tdValor.textContent = gasto.valor || '0.00';
+            }
             tdValor.classList.add('editable-valor');
             tr.appendChild(tdValor);
 
@@ -481,7 +487,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Valor
             const tdValor = document.createElement('td');
-            tdValor.textContent = renda.valor || '0.00';
+            if (renda.tipo === 'variavel') {
+                tdValor.textContent = 'Variável';
+                tdValor.style.fontStyle = 'italic';
+                tdValor.style.color = '#666';
+            } else {
+                tdValor.textContent = renda.valor || '0.00';
+            }
             tdValor.classList.add('editable-valor');
             tr.appendChild(tdValor);
 
