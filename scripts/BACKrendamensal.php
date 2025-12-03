@@ -1,5 +1,9 @@
-<?php   
+<?php
+define('API_REQUEST', true);
+require_once 'verificalogin.php';
 require_once __DIR__ . '/../banco/conexao.php';
+
+header('Content-Type: application/json; charset=utf-8');
 
 // Receber dados em JSON
 $input = file_get_contents('php://input');
@@ -13,7 +17,6 @@ if (!is_array($dados) || empty($dados)) {
 }
 
 try {
-    session_start();
 
     // Pegar o ID do cliente logado da sessão
     $codCliente = $_SESSION['CodCliente'] ?? null;
@@ -37,11 +40,6 @@ try {
             continue;
         }
 
-        if (empty($valor) || !is_numeric($valor)) {
-            $erros[] = "Valor inválido para a renda '{$nome}'";
-            continue;
-        }
-
         // Normalizar tipo
         if ($tipo === 'VARIÁVEL' || $tipo === 'VARIAVEL') {
             $tipo = 'RENDA';
@@ -58,6 +56,12 @@ try {
             ]);
 
         } elseif ($tipo === 'FIXA' || $tipo === 'FIXO') {
+            // Validar valor apenas para rendas fixas
+            if (empty($valor) || !is_numeric($valor)) {
+                $erros[] = "Valor inválido para a renda fixa '{$nome}'";
+                continue;
+            }
+            
             $tipo = 'RENDA';
             $tabela = 'FixGastoRenda';
             

@@ -25,7 +25,7 @@ try {
     $pdo->beginTransaction();
     $erros = [];
 
-    // Inserir cada gasto
+    // Inserir cada gasto 
     foreach ($dados as $item) {
         $nome = trim($item['nome'] ?? '');
         $valor = trim($item['valor'] ?? '');
@@ -37,12 +37,7 @@ try {
             continue;
         }
 
-        if (empty($valor) || !is_numeric($valor)) {
-            $erros[] = "Valor inválido para o gasto '{$nome}'";
-            continue;
-        }
-
-        // Normalizar tipo
+        // Normalizar tipo --(certo acho)
         if ($tipo === 'VARIÁVEL' || $tipo === 'VARIAVEL') {
             $tipo = 'GASTO';
             $tabela = 'VarGastoRenda';
@@ -58,6 +53,12 @@ try {
             ]);
 
         } elseif ($tipo === 'FIXA' || $tipo === 'FIXO') {
+            // Validar valor apenas para gastos fixos
+            if (empty($valor) || !is_numeric($valor)) {
+                $erros[] = "Valor inválido para o gasto fixo '{$nome}'";
+                continue;
+            }
+            
             $tipo = 'GASTO';
             $tabela = 'FixGastoRenda';
             

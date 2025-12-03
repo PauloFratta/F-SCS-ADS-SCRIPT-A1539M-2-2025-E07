@@ -126,6 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             alert('Gastos salvos com sucesso!');
                             // Limpar tabela após salvar
                             tbody.innerHTML = '';
+                            // Recarregar a tabela de gastos salvos
+                            carregarGastosSalvos();
                         } else {
                             alert('Erro ao salvar: ' + data.mensagem);
                         }
@@ -176,6 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             alert('Renda salvos com sucesso!');
                             // Limpar tabela após salvar
                             tbody.innerHTML = '';
+                            // Recarregar a tabela de rendas salvas
+                            if (window.carregarRendasSalvas) {
+                                carregarRendasSalvas();
+                            }
                         } else {
                             alert('Erro ao salvar: ' + data.mensagem);
                         }
@@ -189,6 +195,406 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    })();
+
+    // ==================== TABELA DE GASTOS SALVOS ====================
+    (function () {
+        const tabelaGastosSalvos = document.getElementById('tabelaGastosSalvos');
+        if (!tabelaGastosSalvos) return; // Só executa se a tabela existir na página
+
+        const tbody = tabelaGastosSalvos.querySelector('tbody');
+
+        // Carregar gastos salvos do banco
+        function carregarGastosSalvos() {
+            console.log('Iniciando carregamento de gastos salvos...');
+            fetch('scripts/BACKbuscagastomensal.php')
+                .then(async (response) => {
+                    console.log('Response status:', response.status);
+                    const raw = await response.text();
+                    console.log('RAW gastos response:', raw);
+                    let data;
+                    try {
+                        data = JSON.parse(raw);
+                        console.log('JSON parsed:', data);
+                    } catch (e) {
+                        console.error('Resposta não é JSON válido', e);
+                        console.error('Raw text:', raw);
+                        throw e;
+                    }
+
+                    tbody.innerHTML = '';
+
+                    if (!data || data.sucesso !== true) {
+                        const msg = (data && data.mensagem) ? data.mensagem : 'Falha ao carregar gastos';
+                        console.warn('Carregar gastos falhou:', msg);
+                        const tr = document.createElement('tr');
+                        const td = document.createElement('td');
+                        td.colSpan = 5;
+                        td.textContent = msg === 'Usuário não autenticado' ? 'Faça login para ver seus gastos' : 'Nenhum gasto cadastrado';
+                        td.style.textAlign = 'center';
+                        tr.appendChild(td);
+                        tbody.appendChild(tr);
+                        return;
+                    }
+
+                    if (Array.isArray(data.gastos) && data.gastos.length > 0) {
+                        data.gastos.forEach(gasto => adicionarLinhaGastoSalvo(gasto));
+                    } else {
+                        const tr = document.createElement('tr');
+                        const td = document.createElement('td');
+                        td.colSpan = 5;
+                        td.textContent = 'Nenhum gasto cadastrado';
+                        td.style.textAlign = 'center';
+                        tr.appendChild(td);
+                        tbody.appendChild(tr);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar gastos:', error);
+                    tbody.innerHTML = '';
+                    const tr = document.createElement('tr');
+                    const td = document.createElement('td');
+                    td.colSpan = 5;
+                    td.textContent = 'Erro ao carregar gastos';
+                    td.style.textAlign = 'center';
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
+                });
+        }
+
+        // Adicionar linha com gasto salvo
+        function adicionarLinhaGastoSalvo(gasto) {
+            const tr = document.createElement('tr');
+            tr.dataset.id = gasto.id;
+            tr.dataset.tipo = gasto.tipo;
+
+            // ID
+            const tdId = document.createElement('td');
+            tdId.textContent = gasto.id;
+            tr.appendChild(tdId);
+
+            // Nome
+            const tdNome = document.createElement('td');
+            tdNome.textContent = gasto.nome;
+            tdNome.classList.add('editable-nome');
+            tr.appendChild(tdNome);
+
+            // Valor
+            const tdValor = document.createElement('td');
+            tdValor.textContent = gasto.valor || '0.00';
+            tdValor.classList.add('editable-valor');
+            tr.appendChild(tdValor);
+
+            // Editar (coluna própria)
+            const tdEditar = document.createElement('td');
+            const editBtn = document.createElement('button');
+            editBtn.type = 'button';
+            editBtn.className = 'edit-btn';
+            editBtn.textContent = 'Editar';
+            editBtn.addEventListener('click', () => editarGasto(tr, gasto));
+            tdEditar.appendChild(editBtn);
+            tr.appendChild(tdEditar);
+
+            // Excluir (coluna própria)
+            const tdExcluir = document.createElement('td');
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'Excluir';
+            deleteBtn.addEventListener('click', () => deletarGasto(gasto.id, gasto.tipo, tr));
+            tdExcluir.appendChild(deleteBtn);
+            tr.appendChild(tdExcluir);
+
+            tbody.appendChild(tr);
+        }
+
+        // Editar gasto
+        function editarGasto(tr, gasto) {
+            const tdNome = tr.querySelector('.editable-nome');
+            const tdValor = tr.querySelector('.editable-valor');
+
+            const novoNome = prompt('Novo nome:', tdNome.textContent);
+            if (novoNome === null) return; // Cancelou
+            if (!novoNome.trim()) {
+                alert('Nome não pode estar vazio');
+                return;
+            }
+
+            let novoValor = tdValor.textContent;
+            if (gasto.tipo === 'fixa') {
+                novoValor = prompt('Novo valor:', novoValor);
+                if (novoValor === null) return; // Cancelou
+                if (!novoValor || isNaN(novoValor)) {
+                    alert('Valor inválido');
+                    return;
+                }
+            }
+
+            // Enviar atualização para o servidor
+            fetch('scripts/BACKeditargasto.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: gasto.id,
+                    tipo: gasto.tipo,
+                    nome: novoNome.trim(),
+                    valor: novoValor
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.sucesso) {
+                    tdNome.textContent = novoNome.trim();
+                    if (gasto.tipo === 'fixa') {
+                        tdValor.textContent = parseFloat(novoValor).toFixed(2);
+                    }
+                    alert('Gasto atualizado com sucesso!');
+                } else {
+                    alert('Erro: ' + data.mensagem);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao atualizar gasto');
+            });
+        }
+
+        // Deletar gasto
+        function deletarGasto(id, tipo, tr) {
+            if (!confirm('Tem certeza que deseja deletar este gasto?')) return;
+
+            fetch('scripts/BACKdeletargasto.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: id,
+                    tipo: tipo
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.sucesso) {
+                    tr.remove();
+                    alert('Gasto deletado com sucesso!');
+                    // Recarregar se a tabela ficou vazia
+                    if (tbody.children.length === 0) {
+                        carregarGastosSalvos();
+                    }
+                } else {
+                    alert('Erro: ' + data.mensagem);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao deletar gasto');
+            });
+        }
+
+        // Carregar gastos ao abrir a página
+        carregarGastosSalvos();
+
+        // Tornar a função global para ser chamada após salvar novos gastos
+        window.carregarGastosSalvos = carregarGastosSalvos;
+    })();
+
+    // ==================== TABELA DE RENDAS SALVAS ====================
+    (function () {
+        const tabelaRendaSalvas = document.getElementById('tabelaRenda');
+        if (!tabelaRendaSalvas) return; // Só executa se a tabela existir na página
+
+        const tbody = tabelaRendaSalvas.querySelector('tbody');
+
+        // Carregar rendas salvos do banco
+        function carregarRendasSalvas() {
+            console.log('Iniciando carregamento de rendas salvas...');
+            fetch('scripts/BACKbuscarendamensal.php')
+                .then(async (response) => {
+                    console.log('Response status:', response.status);
+                    const raw = await response.text();
+                    console.log('RAW rendas response:', raw);
+                    let data;
+                    try {
+                        data = JSON.parse(raw);
+                        console.log('JSON parsed:', data);
+                    } catch (e) {
+                        console.error('Resposta não é JSON válido', e);
+                        console.error('Raw text:', raw);
+                        throw e;
+                    }
+
+                    tbody.innerHTML = '';
+
+                    if (!data || data.sucesso !== true) {
+                        const msg = (data && data.mensagem) ? data.mensagem : 'Falha ao carregar rendas';
+                        console.warn('Carregar rendas falhou:', msg);
+                        const tr = document.createElement('tr');
+                        const td = document.createElement('td');
+                        td.colSpan = 5;
+                        td.textContent = msg === 'Usuário não autenticado' ? 'Faça login para ver suas rendas' : 'Nenhuma renda cadastrada';
+                        td.style.textAlign = 'center';
+                        tr.appendChild(td);
+                        tbody.appendChild(tr);
+                        return;
+                    }
+
+                    if (Array.isArray(data.rendas) && data.rendas.length > 0) {
+                        data.rendas.forEach(renda => adicionarLinhaRendaSalva(renda));
+                    } else {
+                        const tr = document.createElement('tr');
+                        const td = document.createElement('td');
+                        td.colSpan = 5;
+                        td.textContent = 'Nenhuma renda cadastrada';
+                        td.style.textAlign = 'center';
+                        tr.appendChild(td);
+                        tbody.appendChild(tr);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar rendas:', error);
+                    tbody.innerHTML = '';
+                    const tr = document.createElement('tr');
+                    const td = document.createElement('td');
+                    td.colSpan = 5;
+                    td.textContent = 'Erro ao carregar rendas';
+                    td.style.textAlign = 'center';
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
+                });
+        }
+
+        // Adicionar linha com renda salva
+        function adicionarLinhaRendaSalva(renda) {
+            const tr = document.createElement('tr');
+            tr.dataset.id = renda.id;
+            tr.dataset.tipo = renda.tipo;
+
+            // ID
+            const tdId = document.createElement('td');
+            tdId.textContent = renda.id;
+            tr.appendChild(tdId);
+
+            // Nome
+            const tdNome = document.createElement('td');
+            tdNome.textContent = renda.nome;
+            tdNome.classList.add('editable-nome');
+            tr.appendChild(tdNome);
+
+            // Valor
+            const tdValor = document.createElement('td');
+            tdValor.textContent = renda.valor || '0.00';
+            tdValor.classList.add('editable-valor');
+            tr.appendChild(tdValor);
+
+            // Editar (coluna própria)
+            const tdEditar = document.createElement('td');
+            const editBtn = document.createElement('button');
+            editBtn.type = 'button';
+            editBtn.className = 'edit-btn';
+            editBtn.textContent = 'Editar';
+            editBtn.addEventListener('click', () => editarRenda(tr, renda));
+            tdEditar.appendChild(editBtn);
+            tr.appendChild(tdEditar);
+
+            // Excluir (coluna própria)
+            const tdExcluir = document.createElement('td');
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'Excluir';
+            deleteBtn.addEventListener('click', () => deletarRenda(renda.id, renda.tipo, tr));
+            tdExcluir.appendChild(deleteBtn);
+            tr.appendChild(tdExcluir);
+
+            tbody.appendChild(tr);
+        }
+
+        // Editar renda
+        function editarRenda(tr, renda) {
+            const tdNome = tr.querySelector('.editable-nome');
+            const tdValor = tr.querySelector('.editable-valor');
+
+            const novoNome = prompt('Novo nome:', tdNome.textContent);
+            if (novoNome === null) return; // Cancelou
+            if (!novoNome.trim()) {
+                alert('Nome não pode estar vazio');
+                return;
+            }
+
+            let novoValor = tdValor.textContent;
+            if (renda.tipo === 'fixa') {
+                novoValor = prompt('Novo valor:', novoValor);
+                if (novoValor === null) return; // Cancelou
+                if (!novoValor || isNaN(novoValor)) {
+                    alert('Valor inválido');
+                    return;
+                }
+            }
+
+            // Enviar atualização para o servidor
+            fetch('scripts/BACKeditarrenda.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: renda.id,
+                    tipo: renda.tipo,
+                    nome: novoNome.trim(),
+                    valor: novoValor
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.sucesso) {
+                    tdNome.textContent = novoNome.trim();
+                    if (renda.tipo === 'fixa') {
+                        tdValor.textContent = parseFloat(novoValor).toFixed(2);
+                    }
+                    alert('Renda atualizada com sucesso!');
+                } else {
+                    alert('Erro: ' + data.mensagem);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao atualizar renda');
+            });
+        }
+
+        // Deletar renda
+        function deletarRenda(id, tipo, tr) {
+            if (!confirm('Tem certeza que deseja deletar esta renda?')) return;
+
+            fetch('scripts/BACKdeletarrenda.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: id,
+                    tipo: tipo
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.sucesso) {
+                    tr.remove();
+                    alert('Renda deletada com sucesso!');
+                    // Recarregar se a tabela ficou vazia
+                    if (tbody.children.length === 0) {
+                        carregarRendasSalvas();
+                    }
+                } else {
+                    alert('Erro: ' + data.mensagem);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao deletar renda');
+            });
+        }
+
+        // Carregar rendas ao abrir a página
+        carregarRendasSalvas();
+
+        // Tornar a função global para ser chamada após salvar novas rendas
+        window.carregarRendasSalvas = carregarRendasSalvas;
     })();
 
 });
