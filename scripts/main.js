@@ -198,8 +198,31 @@ async function exibirDespesasRelatorio()
                 const valorTd = document.createElement('td');
                 const tipoTd = document.createElement('td');
                 nomeTd.textContent = item.NomeFixGR ?? item.NomeVarGR ?? '';
-                valorTd.textContent = formatValor(item.valor ?? item.ValorFixGR ?? 0);
-                tipoTd.textContent = item.FixRenOuGas ?? item.VarRenOUGas ?? '';
+                if (item.NomeFixGR == null)
+                {
+                    valorTd.innerHTML = "";
+
+                    tipoTd.textContent = "Variável";
+                    const valor = document.createElement('input');
+                    valor.type = "number";
+                    valor.placeholder = "00,00";
+
+                    const container = document.createElement('span');
+                    container.classList.add("valor-var-tabela")
+
+                    const prefixo = document.createElement('span');
+                    prefixo.textContent = "R$";
+
+                    container.appendChild(prefixo)
+                    container.appendChild(valor);
+
+                    valorTd.appendChild(container);
+                }
+                else
+                {
+                    tipoTd.textContent = "Fixo";
+                    valorTd.textContent = formatValor(item.valor ?? item.ValorFixGR ?? 0);
+                }
                 tr.appendChild(nomeTd);
                 tr.appendChild(valorTd);
                 tr.appendChild(tipoTd);
@@ -220,11 +243,31 @@ async function exibirDespesasRelatorio()
                 const valorTd = document.createElement('td');
                 const tipoTd = document.createElement('td');
                 nomeTd.textContent = item.nome ?? item.NomeFixGR ?? item.NomeVarGR ?? '';
-                valorTd.textContent = formatValor(item.valor ?? item.ValorFixGR ?? item.ValorVarGR ?? 0);
                 if (item.NomeFixGR == null)
+                {
+                    valorTd.innerHTML = "";
+
                     tipoTd.textContent = "Variável";
+                    const valor = document.createElement('input');
+                    valor.type = "number";
+                    valor.placeholder = "00,00";
+
+                    const container = document.createElement('span');
+                    container.classList.add("valor-var-tabela")
+
+                    const prefixo = document.createElement('span');
+                    prefixo.textContent = "R$";
+
+                    container.appendChild(prefixo)
+                    container.appendChild(valor);
+
+                    valorTd.appendChild(container);
+                }
                 else
+                {
                     tipoTd.textContent = "Fixo";
+                    valorTd.textContent = formatValor(item.valor ?? item.ValorFixGR ?? 0);
+                }
                 tr.appendChild(nomeTd);
                 tr.appendChild(valorTd);
                 tr.appendChild(tipoTd);
