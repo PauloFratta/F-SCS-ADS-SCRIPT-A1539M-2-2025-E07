@@ -221,7 +221,10 @@ async function exibirDespesasRelatorio()
                 const tipoTd = document.createElement('td');
                 nomeTd.textContent = item.nome ?? item.NomeFixGR ?? item.NomeVarGR ?? '';
                 valorTd.textContent = formatValor(item.valor ?? item.ValorFixGR ?? item.ValorVarGR ?? 0);
-                tipoTd.textContent = item.tipo ?? item.TipoFixGR ?? item.TipoVarGR ?? '';
+                if (item.NomeFixGR == null)
+                    tipoTd.textContent = "Variável";
+                else
+                    tipoTd.textContent = "Fixo";
                 tr.appendChild(nomeTd);
                 tr.appendChild(valorTd);
                 tr.appendChild(tipoTd);
