@@ -206,6 +206,8 @@ async function exibirDespesasRelatorio()
                     const valor = document.createElement('input');
                     valor.type = "number";
                     valor.placeholder = "00,00";
+                    valor.addEventListener('input', atualizarTotais);
+
 
                     const container = document.createElement('span');
                     container.classList.add("valor-var-tabela")
@@ -251,6 +253,8 @@ async function exibirDespesasRelatorio()
                     const valor = document.createElement('input');
                     valor.type = "number";
                     valor.placeholder = "00,00";
+                    valor.addEventListener('input', atualizarTotais);
+
 
                     const container = document.createElement('span');
                     container.classList.add("valor-var-tabela")
@@ -274,12 +278,64 @@ async function exibirDespesasRelatorio()
                 despesasBody.appendChild(tr);
             });
         }
-
+        atualizarTotais();
     } catch (err) {
         console.error(err);
         if (erroEl) erroEl.textContent = 'Erro ao carregar relatório: ' + (err.message || '');
     }
 }
+
+function atualizarTotais() {
+    const rendasBody = document.getElementById('listaRendas');
+    const despesasBody = document.getElementById('listaDespesas');
+
+    let totalRenda = 0;
+    let totalDespesa = 0;
+
+    const parseValor = (v) => Number(String(v).replace('R$', '').replace('.', '').replace(',', '.')) || 0;
+
+    // --- SOMAR RENDAS ---
+    rendasBody.querySelectorAll('tr').forEach(tr => {
+        const tdValor = tr.children[1];
+        if (!tdValor) return;
+
+        const input = tdValor.querySelector('input');
+        if (input) {
+            // valor variável
+            totalRenda += parseValor(input.value);
+        } else {
+            // valor fixo (texto)
+            totalRenda += parseValor(tdValor.textContent);
+        }
+    });
+
+    // --- SOMAR DESPESAS ---
+    despesasBody.querySelectorAll('tr').forEach(tr => {
+        const tdValor = tr.children[1];
+        if (!tdValor) return;
+
+        const input = tdValor.querySelector('input');
+        if (input) {
+            totalDespesa += parseValor(input.value);
+        } else {
+            totalDespesa += parseValor(tdValor.textContent);
+        }
+    });
+
+    // Atualizar resumo
+    document.getElementById('totalRenda').textContent =
+        totalRenda.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    document.getElementById('totalDespesa').textContent =
+        totalDespesa.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    // Atualizar balanço final
+    const balanco = totalRenda - totalDespesa;
+
+    document.getElementById('balancoFinal').textContent =
+        balanco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
 
 // Chama automaticamente quando a página tiver o DOM pronto
 document.addEventListener('DOMContentLoaded', () => {
