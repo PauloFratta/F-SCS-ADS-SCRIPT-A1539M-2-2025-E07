@@ -663,10 +663,30 @@ async function exibirDespesasRelatorio()
 
                     tipoTd.textContent = "Variável";
                     const valor = document.createElement('input');
-                    valor.type = "number";
+                    valor.type = "text";
+                    valor.inputMode = "decimal";
                     valor.placeholder = "00,00";
-                    valor.addEventListener('input', atualizarTotais);
+                    
+                    valor.addEventListener("beforeinput", (e) => {
+                        // permite deletar
+                        if (e.inputType === "deleteContentBackward" ||
+                            e.inputType === "deleteContentForward" ||
+                            e.inputType === "deleteByCut") {
+                            return;
+                        }
 
+                        // pega caractere digitado
+                        const char = e.data;
+
+                        // aceita dígitos, vírgula e ponto
+                        const permitido = /[0-9.,]/;
+
+                        // se não for permitido → bloquear
+                        if (char && !permitido.test(char)) {
+                            e.preventDefault();
+                        }
+                    });
+                    valor.addEventListener('input', atualizarTotais);
 
                     const container = document.createElement('span');
                     container.classList.add("valor-var-tabela")
@@ -710,8 +730,30 @@ async function exibirDespesasRelatorio()
 
                     tipoTd.textContent = "Variável";
                     const valor = document.createElement('input');
-                    valor.type = "number";
+                    valor.type = "text";
+                    valor.inputMode = "decimal";
                     valor.placeholder = "00,00";
+
+                    valor.addEventListener("beforeinput", (e) => {
+                        // permite deletar
+                        if (e.inputType === "deleteContentBackward" ||
+                            e.inputType === "deleteContentForward" ||
+                            e.inputType === "deleteByCut") {
+                            return;
+                        }
+
+                        // pega caractere digitado
+                        const char = e.data;
+
+                        // aceita dígitos, vírgula e ponto
+                        const permitido = /[0-9.,]/;
+
+                        // se não for permitido → bloquear
+                        if (char && !permitido.test(char)) {
+                            e.preventDefault();
+                        }
+                    });                    
+
                     valor.addEventListener('input', atualizarTotais);
 
 
