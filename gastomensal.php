@@ -33,7 +33,32 @@
             </div>
             <div class="field">
                 <label for="col2">Valor</label>
-                <input type="text" id="col2" placeholder="Valor">
+                <input type="text" id="col2" placeholder="00,00">
+
+                <script>
+                    const valor = document.getElementById('col2');
+                    valor.inputMode = "decimal";
+                    
+                    valor.addEventListener("beforeinput", (e) => {
+                        // permite deletar
+                        if (e.inputType === "deleteContentBackward" ||
+                            e.inputType === "deleteContentForward" ||
+                            e.inputType === "deleteByCut") {
+                            return;
+                        }
+
+                        // pega caractere digitado
+                        const char = e.data;
+
+                        // aceita dígitos, vírgula e ponto
+                        const permitido = /[0-9.,]/;
+
+                        // se não for permitido → bloquear
+                        if (char && !permitido.test(char)) {
+                            e.preventDefault();
+                        }
+                    });
+                </script>
             </div>
             <div class="field">
                 <label for="tipo">Tipo</label>
