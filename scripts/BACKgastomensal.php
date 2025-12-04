@@ -54,10 +54,12 @@ try {
 
         } elseif ($tipo === 'FIXA' || $tipo === 'FIXO') {
             // Validar valor apenas para gastos fixos
-            if (empty($valor) || !is_numeric($valor)) {
-                $erros[] = "Valor inválido para o gasto fixo '{$nome}'";
+            if (!preg_match('/^[0-9.,]+$/', $valor)) 
+            {
+                $erros[] = "Valor inválido para o gasto fixo '{$nome}'.";
                 continue;
             }
+
             
             $tipo = 'GASTO';
             $tabela = 'FixGastoRenda';

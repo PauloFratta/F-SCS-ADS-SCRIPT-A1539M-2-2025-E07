@@ -57,7 +57,8 @@ try {
 
         } elseif ($tipo === 'FIXA' || $tipo === 'FIXO') {
             // Validar valor apenas para rendas fixas
-            if (empty($valor) || !is_numeric($valor)) {
+            if (!preg_match('/^[0-9.,]+$/', $valor)) 
+            {
                 $erros[] = "Valor inválido para a renda fixa '{$nome}'";
                 continue;
             }
